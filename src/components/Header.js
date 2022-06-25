@@ -2,43 +2,42 @@ import React from 'react'
 import styled from 'styled-components'
 
 function Header() {
-  return (
-    <Nav>
-        <Logo src="/images/logo.svg " />
-        <NavMenu>
-            <a>
-                <img src="/images/home-icon.svg"/>
-                <span>HOME</span>
-            </a>
-            <a>
-                <img src="/images/search-icon.svg"/>
-                <span>SEARCH</span>
-            </a>
-            <a>
-                <img src="/images/watchlist-icon.svg"/>
-                <span>WATCHLIST</span>
-            </a>
-            <a>
-                <img src="/images/original-icon.svg"/>
-                <span>ORIGINALS</span>
-            </a>
-            <a>
-                <img src="/images/movie-icon.svg"/>
-                <span>MOVIES</span>
-            </a>
-            <a>
-                <img src="/images/series-icon.svg"/>
-                <span>TV SHOWS</span>
-            </a>
-        </NavMenu>
-        <UserImg src="https://i.scdn.co/image/ab6775700000ee85bfbd64861a652d96224cdcb4"/>
-    </Nav>
-  )
+    return ( <Nav>
+            <Logo src = "/images/logo.svg"/>
+                <NavMenu>
+                <a>
+                    <img src = "/images/home-icon.svg"/>
+                    <span> HOME </span> 
+                </a> 
+                <a>
+                    <img src = "/images/search-icon.svg"/>
+                    <span> SEARCH </span> 
+                </a> 
+                <a>
+                    <img src = "/images/watchlist-icon.svg"/>
+                    <span> WATCHLIST </span> 
+                </a> 
+                <a>
+                    <img src = "/images/original-icon.svg"/>
+                    <span> ORIGINALS </span> 
+                </a> 
+                <a>
+                    <img src = "/images/movie-icon.svg"/>
+                    <span> MOVIES </span> 
+                </a> 
+                <a>
+                    <img src = "/images/series-icon.svg"/>
+                    <span> TV SHOWS </span> 
+                </a> 
+                </NavMenu> 
+                <UserImg src = "https://i.scdn.co/image/ab6775700000ee85bfbd64861a652d96224cdcb4" />
+            </Nav>
+    )
 }
 
 export default Header
 
-const Nav = styled.nav`
+const Nav = styled.nav `
     height: 70px;
     background: #090b13;
     display: flex;
@@ -46,11 +45,11 @@ const Nav = styled.nav`
     padding: 0 36px;
     overflow-x: hidden;
 `
-const Logo = styled.img`
+const Logo = styled.img `
     width: 80px;
 `
 
-const NavMenu = styled.div`
+const NavMenu = styled.div `
     display: flex;
     flex: 1;
     margin-left: 25px;
@@ -94,7 +93,7 @@ const NavMenu = styled.div`
     }
 `
 
-const UserImg = styled.img`
+const UserImg = styled.img `
     width: 48px;
     height: 48px;
     border-radius: 50%;
