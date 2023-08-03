@@ -1,37 +1,38 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 function Movies() {
+    let [posts, setPosts] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+                axios
+                .get("http://localhost:3300/fetchDiscoveryFeed")
+                .then((response) => {
+                  setPosts(response.data);
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+          };
+          fetchData()
+        
+      }, []);
   return (
     <Container>
         <h4>
             Recommeded for you
         </h4>
         <Content>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
-            <Wrap>
-                <img src='https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg'/>
-            </Wrap>
+            {posts && posts.map((item,id) => (
+        <Wrap>
+            <Link to={"/detail/"+item.id}>
+          <img src={"https://image.tmdb.org/t/p/original/"+item.poster_path} />
+          </Link>
+        </Wrap>
+      ))}
         </Content>
     </Container>
   )
@@ -45,7 +46,7 @@ const Container = styled.div`
 const Content = styled.div`
     display: grid;
     grid-gap: 25px;
-    grid-template-columns: repeat(4,minmax(0,1fr));
+    grid-template-columns: repeat(5,minmax(0,1fr));
 `
 
 const Wrap = styled.div`

@@ -1,13 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 function Header() {
     return ( <Nav>
             <Logo src = "/images/logo.svg"/>
                 <NavMenu>
-                <a>
+                <a><Link to={"/"}>
                     <img src = "/images/home-icon.svg"/>
                     <span> HOME </span> 
+                    </Link>
                 </a> 
                 <a>
                     <img src = "/images/search-icon.svg"/>
@@ -90,6 +92,9 @@ const NavMenu = styled.div `
                 opacity: 1;
             }
         }
+    }
+    a:visited {
+      color: white;
     }
 `
 
