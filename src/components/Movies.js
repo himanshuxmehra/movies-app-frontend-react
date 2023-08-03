@@ -2,14 +2,26 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
+import LoadingSpinner from './LoadingSpinner';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Movies() {
     let [posts, setPosts] = useState();
-
+    const [isLoading, setIsLoading] = useState(true);
+    const handleImageLoad = () => {
+        setIsLoading(false);
+      };
     useEffect(() => {
+        const options = {
+            method: 'GET',
+            url: apiUrl+'/fetchDiscoveryFeed',
+            headers: {
+            'Content-Type': 'application/json'
+            }
+          };
         const fetchData = async () => {
                 axios
-                .get("http://localhost:3300/fetchDiscoveryFeed")
+                .request(options)
                 .then((response) => {
                   setPosts(response.data);
                 })
@@ -29,7 +41,8 @@ function Movies() {
             {posts && posts.map((item,id) => (
         <Wrap>
             <Link to={"/detail/"+item.id}>
-          <img src={"https://image.tmdb.org/t/p/original/"+item.poster_path} />
+            {isLoading && <LoadingSpinner />}
+          <img loading="lazy" src={"https://image.tmdb.org/t/p/original/"+item.poster_path} onLoad={handleImageLoad}/>
           </Link>
         </Wrap>
       ))}

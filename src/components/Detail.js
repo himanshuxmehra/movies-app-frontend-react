@@ -2,14 +2,33 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Modal from "./Modal";
+const apiUrl = process.env.REACT_APP_API_URL;
+
 function Detail() {
   let [movieDetail, setMovieDetail] = useState("invalid");
+  let [video, setVideo] = useState("invalid");
+
   const { id } = useParams();
   if (id) console.log(id);
   useEffect(() => {
+    const options = {
+      method: "GET",
+      url: apiUrl + "/fetchMovieDetail/" + id,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const options2 = {
+      method: "GET",
+      url: apiUrl + "/fetchMovieDetail/video/" + id,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
     const fetchData = async () => {
       axios
-        .get("http://localhost:3300/fetchMovieDetail/" + id)
+        .request(options)
         .then((response) => {
           console.log(response.data.genres);
           setMovieDetail(response.data);
@@ -17,9 +36,33 @@ function Detail() {
         .catch((error) => {
           console.error(error);
         });
+      axios
+        .request(options2)
+        .then((response) => {
+          setVideo(
+            "https://www.youtube.com/embed/" +
+              response.data.key +
+              "?autoplay=1&modestbranding=1"
+          );
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
     fetchData();
   }, [id]);
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    console.log(modalOpen);
+  };
+
   return (
     <Container>
       <Background>
@@ -32,19 +75,26 @@ function Detail() {
       <ImageTitle>
         <h2>{movieDetail.title}</h2>
         <img
-          src={
-            "https://image.tmdb.org/t/p/original/" + movieDetail.poster_path
-          }
+          src={"https://image.tmdb.org/t/p/original/" + movieDetail.poster_path}
         />
       </ImageTitle>
       <Controls>
         <PlayButton>
-          <img src="/images/play-icon-black.png" />
-          <span>PLAY</span>
+          <img onClick={handleOpenModal} src="/images/play-icon-black.png" />
+          <span onClick={handleOpenModal}>PLAY</span>
+          <Modal isOpen={modalOpen} onRequestClose={handleCloseModal}>
+            <iframe width="100%" height="100%" src="${video}" />
+
+            <button onClick={handleCloseModal}>Close Modal</button>
+          </Modal>
         </PlayButton>
         <TrailerButton>
-          <img src="/images/play-icon-white.png" />
-          <span>TRAILER</span>
+          <img onClick={handleOpenModal} src="/images/play-icon-white.png" />
+          <span onClick={handleOpenModal}>TRAILER</span>
+          <Modal isOpen={modalOpen} onRequestClose={handleCloseModal}>
+            <iframe width="100%" height="100%" src="${video}" />
+            <button onClick={handleCloseModal}>Close Modal</button>
+          </Modal>
         </TrailerButton>
         <AddButton>
           <span>+</span>
@@ -55,12 +105,12 @@ function Detail() {
       </Controls>
       <SubTitle>
         {movieDetail.release_date} • {movieDetail.runtime} mins •{" "}
-        {movieDetail.genres && movieDetail.genres.map((item) => (
-          <>{item.name} </>
-        ))}
+        {movieDetail.genres &&
+          movieDetail.genres.map((item) => <>{item.name} </>)}
       </SubTitle>
       <Description>
-        {movieDetail.overview}<br/>
+        {movieDetail.overview}
+        <br />
         {/* {movieDetail.production_companies && movieDetail.production_companies.map((item) => (
           <img
           src={
@@ -114,8 +164,8 @@ const ImageTitle = styled.div`
 `;
 
 const Controls = styled.div`
-    margin-top: -20px;
-    padding-left: 10px;
+  margin-top: -20px;
+  padding-left: 10px;
   display: flex;
   align-items: center;
 `;

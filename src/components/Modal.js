@@ -7,13 +7,25 @@ const StyledModal = styled(ReactModal)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  max-width: 400px;
-  width: 90%;
+  max-width: 90%;
+  max-height: 90%;
+  width: 100%;
+  height: 100%;
   outline: none;
+  &:before{
+      background: url("/images/home-background.png") center center / cover 
+      no-repeat fixed;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+    }
 `;
 
 const CloseButton = styled.button`
@@ -39,3 +51,4 @@ const Modal = ({ isOpen, onRequestClose, children }) => {
     </StyledModal>
   );
 };
+export default Modal;

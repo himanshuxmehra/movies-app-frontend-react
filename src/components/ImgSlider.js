@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const apiUrl = process.env.REACT_APP_API_URL;
 function ImgSlider() {
   let [posts, setPosts] = useState();
   let settings = {
@@ -17,9 +18,16 @@ function ImgSlider() {
     autoplay: true,
   };
   useEffect(() => {
+    const options = {
+        method: 'GET',
+        url: apiUrl+'/fetchNewMovies',
+        headers: {
+        'Content-Type': 'application/json'
+        }
+      };
     const fetchData = async () => {
             axios
-            .get("http://localhost:3300/fetchNewMovies")
+            .request(options)
             .then((response) => {
               setPosts(response.data);
             })
