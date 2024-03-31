@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import Modal from "./Modal";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function Detail() {
@@ -52,17 +51,6 @@ function Detail() {
     fetchData();
   }, [id]);
 
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    console.log(modalOpen);
-  };
-
   return (
     <Container>
       <Background>
@@ -79,23 +67,18 @@ function Detail() {
         />
       </ImageTitle>
       <Controls>
+      <Link to={"/trailer/"+id}>
         <PlayButton>
-          <img onClick={handleOpenModal} src="/images/play-icon-black.png" />
-          <span onClick={handleOpenModal}>PLAY</span>
-          <Modal isOpen={modalOpen} onRequestClose={handleCloseModal}>
-            <iframe width="100%" height="100%" src="${video}" />
-
-            <button onClick={handleCloseModal}>Close Modal</button>
-          </Modal>
+          <img src="/images/play-icon-black.png" />
+          <span>PLAY</span>
         </PlayButton>
+      </Link>
+      <Link to={"/trailer/"+id}>
         <TrailerButton>
-          <img onClick={handleOpenModal} src="/images/play-icon-white.png" />
-          <span onClick={handleOpenModal}>TRAILER</span>
-          <Modal isOpen={modalOpen} onRequestClose={handleCloseModal}>
-            <iframe width="100%" height="100%" src="${video}" />
-            <button onClick={handleCloseModal}>Close Modal</button>
-          </Modal>
+          <img src="/images/play-icon-white.png" />
+          <span>TRAILER</span>
         </TrailerButton>
+      </Link>
         <AddButton>
           <span>+</span>
         </AddButton>
